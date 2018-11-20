@@ -1,0 +1,40 @@
+import discord
+from discord.ext.commands import Bot
+from discord.ext import commands
+import asyncio
+import time
+
+Client = discord.Client()
+client = commands.Bot(command_prefix = "!")
+chat_filter = ["FUCK", "NIGGER", "NIGGA" ]
+bypass_list = []
+
+
+@client.event
+async def on_ready():
+    print("Bot Online")
+
+@client.event
+async def on_message(message):
+    if message.content == "Q!help":
+        UserID = message.author.id
+        await client.send_message(message.channel, "<@%s> Commands For KING: " % (UserID))
+
+@client.event
+async def on_message(message):
+    contents = message.content.split(" ") #contents is a list type
+    UserID = message.author.id
+    for word in contents:
+        if word.upper() in chat_filter and not message.author.id in bypass_list:
+            try:
+                await client.delete_message(message)
+                await client.send_message(message.channel, " <@%s> ```** my men will throw you out of the bar after 3**```" % (UserID))
+            except discord.errors.NotFound:
+                return
+
+
+
+
+
+
+client.run("NTE0MTQ4NjY1OTQyODY4MDM2.DtSaSA.bsSXDbBVtHSWNpSs6xMafbQiDNc")
